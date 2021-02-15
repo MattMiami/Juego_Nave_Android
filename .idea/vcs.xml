@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/AgendaContactosPython" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/App_Mensajes_Firebase" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ContactosPtyhon" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/EmpleadosRecyclerView" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/FirebaseAuth" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/IsabelCobo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Nave_Espacial_Canvas" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/NavigationJetPack" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Proyecto_Final" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RealTime_Database" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/SQLite_Recycler" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/python_2" vcs="Git" />
+  </component>
+</project>
