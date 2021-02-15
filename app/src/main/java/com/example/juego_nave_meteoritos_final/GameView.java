@@ -5,9 +5,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -16,14 +18,11 @@ import java.util.List;
 
 public class GameView extends SurfaceView {
 
-
-    private final Bitmap spriteNave;
-    private final Bitmap spriteTiro;
+    private Bitmap spriteNave;
+    private Bitmap spriteTiro;
     private Fondo fondoUno;
     private SurfaceHolder holder;
     private GameLoopThread gameLoopThread;
-    private int x = 0;
-    private int xVelocidad = 10;
     private SpriteNave nave;
     private Tiro tiro;
 
@@ -37,6 +36,10 @@ public class GameView extends SurfaceView {
             @SuppressLint("WrongCall")
             @Override
             public void surfaceCreated(@NonNull SurfaceHolder holder) {
+
+                spriteTiro = BitmapFactory.decodeResource(getResources(), R.drawable.tirogrande);
+                crearNave();
+                tiroNave(true);
 
                 gameLoopThread.start();
                 gameLoopThread.setEjecucion(true);
@@ -62,14 +65,7 @@ public class GameView extends SurfaceView {
             }
         });
 
-
         fondoUno = new Fondo(MainActivity.ancho, MainActivity.alto, getResources());
-        spriteNave = BitmapFactory.decodeResource(getResources(), R.drawable.sprite1);
-        nave = new SpriteNave(this, spriteNave, context);
-
-        spriteTiro = BitmapFactory.decodeResource(getResources(), R.drawable.tirosazules);
-        tiro = new Tiro(this, spriteTiro, context);
-
 
     }
 
@@ -79,7 +75,6 @@ public class GameView extends SurfaceView {
         nave.onDraw(canvas);
         tiro.onDraw(canvas);
 
-
     }
 
 
@@ -87,14 +82,33 @@ public class GameView extends SurfaceView {
     public boolean onTouchEvent(MotionEvent event) {
 
 
+        //Si tocamos en la mitad derecha de la pantalla dispararemos
         switch (event.getAction()) {
             case MotionEvent.ACTION_UP:
                 if (event.getX() > MainActivity.ancho / 2) {
-
-
+                    tiroNave(true);
                 }
         }
         return true;
+    }
+
+    //Creamos la nave
+    private void crearNave(){
+        spriteNave = BitmapFactory.decodeResource(getResources(), R.drawable.prueba2);
+        this.nave = new SpriteNave(this, spriteNave, 3,3,getContext());
+    }
+
+    //Creamos el tiro
+    private void tiroNave(boolean vivo){
+        int columnas = 2;
+        int filas = 1;
+
+        int x = nave.getX()+nave.getAncho()/*/2 - (spriteTiro.getWidth()/columnas)*/;
+        int y = nave.getY()+nave.getAlto()/2/* - (spriteTiro.getHeight()/filas)*/;
+        int velocidadXtiro = 30;
+        this.tiro = new Tiro(this,spriteTiro,filas,columnas,x,y,velocidadXtiro,vivo);
+//        Log.e("eje", "Varoles creado Y " + y);
+
     }
 
 
