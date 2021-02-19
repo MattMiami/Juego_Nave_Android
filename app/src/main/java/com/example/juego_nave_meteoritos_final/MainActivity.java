@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import static com.example.juego_nave_meteoritos_final.SpriteNave.event;
 import static com.example.juego_nave_meteoritos_final.SpriteNave.sensorManager;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     DisplayMetrics metrics = new DisplayMetrics();
     public static int ancho;
     public static int alto;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,20 +44,35 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-
-        sensorManager.unregisterListener((SensorEventListener) this);
+        if (sensorManager != null && event != null) {
+            sensorManager.unregisterListener(event);
+        }
+        gameView.pausarMusica();
+        finish();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sensorManager != null && event != null) {
+            sensorManager.registerListener(event, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+        }
+        gameView.reproducirMusica();
 
 
+
+    }
 
     @Override
     protected void onStop() {
         super.onStop();
-
-        sensorManager.unregisterListener((SensorEventListener) this);
-
+        if (sensorManager != null && event != null) {
+            sensorManager.unregisterListener(event);
+        }
+        gameView.detenerMusica();
+        gameView.liberarRecursosMusica();
+        finish();
     }
 
 

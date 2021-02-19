@@ -14,8 +14,8 @@ public class Sprite {
 
     protected GameView gameView;
     protected Bitmap bitmap;
-    protected int x = 0;
-    protected int y = 0;
+    protected int x;
+    protected int y;
     protected int xVelocidad;
     protected int yVelocidad;
     protected int frameColumnasActual = 0;
@@ -127,23 +127,9 @@ public class Sprite {
         return 0;
     }
 
-    public boolean isCollition(float x2, float y2) {
+    public boolean colisionaCon(float x2, float y2) {
         return x2 > x && x2 < x + ancho && y2 > y && y2 < y + alto;
     }
 
-    public boolean isCollition(Sprite sprite2) {
-        // Para detectar la colision entre dos imagenes
-        if(
-                this.x < sprite2.getX() + sprite2.getAncho() &&
-                        this.x + this.ancho > sprite2.getX() &&
-                        this.y + this.alto > sprite2.getY() &&
-                        this.y < sprite2.getY() + sprite2.getAlto()
-        )
-        {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+
 }

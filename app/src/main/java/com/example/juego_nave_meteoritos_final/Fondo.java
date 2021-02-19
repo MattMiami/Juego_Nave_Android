@@ -9,13 +9,9 @@ public class Fondo {
     int x = 0, y = 0;
     Bitmap imagenFondo;
 
-
-    /*He creado una clase para crear "movimiento" en el fondo del juego
-         Al constructor le pasamos los ejes 'x' e 'y' además del drawable de mi imagen de fondo
-     */
     Fondo(int pantallaX, int pantallaY, Resources resources) {
 
-        imagenFondo = BitmapFactory.decodeResource(resources, R.drawable.space);
+        imagenFondo = BitmapFactory.decodeResource(resources, R.drawable.tierra);
         imagenFondo = Bitmap.createScaledBitmap(imagenFondo, pantallaX, pantallaY, false);
 
     }

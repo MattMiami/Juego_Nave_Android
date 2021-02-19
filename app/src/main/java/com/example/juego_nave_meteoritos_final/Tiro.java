@@ -10,7 +10,7 @@ public class Tiro extends Sprite {
 
     public int x;
     public int y;
-
+    Bitmap tiro;
 
     public Tiro(GameView gameView, Bitmap tiro, int filasBitmap, int columnasBitmap, int x, int y, int xVelocidad, boolean vivo) {
         super(gameView, tiro, filasBitmap, columnasBitmap);
@@ -19,17 +19,18 @@ public class Tiro extends Sprite {
         this.y = y;
         this.xVelocidad = xVelocidad;
         this.vivo = vivo;
+        this.tiro = tiro;
     }
 
 
     @Override
     protected void update() {
-
-
-        if (x >= gameView.getWidth() - ancho - xVelocidad || x + xVelocidad <= 0) {
+    //Aqui le damos el moviemiento sobre el eje X al tiro de la nave haciendo que se salga de la pantalla
+        if (x >= gameView.getWidth() + ancho - xVelocidad || x + xVelocidad <= 0) {
             vivo = false;
         } else {
             x = x + xVelocidad;
+
         }
 
         //frameColumnasActual = getNextAnimationColumn();
@@ -38,24 +39,24 @@ public class Tiro extends Sprite {
 
     @Override
     public void onDraw(Canvas canvas) {
+        //Actualizamos el "movimiento" del tiro, usando el método anterior
         update();
         int srcX = frameColumnasActual * ancho;
-        int srcY = frameFilasActual * alto;
-
-        src.left = srcX;
-        src.top = srcY;
-        src.right = srcX + ancho;
-        src.bottom = srcY + alto;
-        dst.left = this.x;
-        dst.top = this.y;
-        dst.right = this.x + ancho;
-        dst.bottom = this.y + alto;
-
-        canvas.drawBitmap(bitmap, src, dst, null);
+        int srcY = getNextAnimationRow() * alto;
+        Rect src = new Rect(srcX, srcY, srcX + ancho, srcY + alto);
+        Rect dst = new Rect(x, y, x + ancho, y + alto);
+        canvas.drawBitmap(tiro, src, dst, null);
     }
+
+
+
 
     @Override
     protected int getNextAnimationColumn() {
+        //Si tienes un sprite utilizarlo aqui
         return ++frameColumnasActual % columnasBitmap;
     }
+
+
+
 }

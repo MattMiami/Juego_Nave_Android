@@ -5,9 +5,10 @@ import android.graphics.Canvas;
 
 public class GameLoopThread extends Thread {
 
-    static final long FPS = 25;
+    static final long FPS = 40;
     private GameView gameView;
     private boolean estaActivo;
+
 
     public GameLoopThread(GameView gameView) {
         this.gameView = gameView;
@@ -16,7 +17,6 @@ public class GameLoopThread extends Thread {
     public void setEjecucion(boolean ejecutar){
         estaActivo = ejecutar;
     }
-
 
     @SuppressLint("WrongCall")
     @Override
@@ -47,7 +47,6 @@ public class GameLoopThread extends Thread {
             } catch (Exception e) {}
         }
     }
-
 
 
 }

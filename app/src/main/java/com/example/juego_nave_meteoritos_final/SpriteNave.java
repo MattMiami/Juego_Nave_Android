@@ -12,6 +12,7 @@ import android.hardware.SensorManager;
 
 public class SpriteNave extends Sprite implements SensorEventListener {
 
+    public static SensorEventListener event;
     public static SensorManager sensorManager;
     public static Sensor sensor;
     float sensibilidadSensor;
@@ -21,28 +22,26 @@ public class SpriteNave extends Sprite implements SensorEventListener {
     public SpriteNave(GameView gameView, Bitmap nave, int filasBitmap, int columnasBitmap, Context context) {
         super(gameView, nave, filasBitmap, columnasBitmap);
 
-
         this.nave = nave;
         //Posicion de la nave al empezar
-        x = (gameView.getWidth() - ancho) / 3;
-        y = (gameView.getHeight() - alto) / 3;
-
-        xVelocidad = 30;
-        yVelocidad = 30;
-
+        x = (gameView.getWidth() - ancho) / 4;
+        y = (gameView.getHeight() - alto) / 2;
 
         //Inicializamos el sensor manager y creamos una instancia del acelerometro, creamos un float para controlar la sensibilidad
+        event = this;
         sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
-        sensibilidadSensor = (float) 2;
+        //Con la sensibilidad podremos controlar la velocidad de la nave como veremos un poco más abajo
+        sensibilidadSensor = (float) 5;
 
     }
 
 
-    //Damos velocidad al objeto y marcamos los límites para que no salga de la pantalla
+
     @Override
     protected void update() {
+        //Limitamos el movimiento de la nave al ancho y al alto de la pantalla
         if (x >= gameView.getWidth() - ancho / 2 - xVelocidad || x + xVelocidad <= -ancho / 2) {
             xVelocidad = -xVelocidad;
         } else {
@@ -58,7 +57,7 @@ public class SpriteNave extends Sprite implements SensorEventListener {
 
     @Override
     protected int getNextAnimationRow() {
-
+        //Alternamos las animaciones del sprite
         int[] DIRECCION = {1, 0, 2};
         double dirDouble = (Math.atan2(xVelocidad, yVelocidad) / (Math.PI / 2) + 2);
         int direccion = (int) Math.round(dirDouble) % filasBitmap;
@@ -68,6 +67,7 @@ public class SpriteNave extends Sprite implements SensorEventListener {
 
     @Override
     public void onDraw(Canvas canvas) {
+        //actualizamos el "dibujo de la nave, pintandolo donde se encuetre en ese momento"
         update();
         int srcX = frameColumnasActual * ancho;
         int srcY = getNextAnimationRow() * alto;
@@ -79,7 +79,6 @@ public class SpriteNave extends Sprite implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
             //Le doy menos velocidad al movimiento de la nave en X que en el eje Y
             float x, y;
             x = Math.round(event.values[1]);
@@ -88,15 +87,13 @@ public class SpriteNave extends Sprite implements SensorEventListener {
             } else if (x < -6) {
                 x = (float) -6;
             }
-
             y = Math.round(event.values[0]);
             if (y > 9) {
                 y = (float) 9;
             } else if (y < -9) {
                 y = (float) -9;
             }
-
-
+            //Aqui igualamos la velocidad a el movimiento del objeto entre los ejex X e Y por la sensibilidadSensor.
             this.xVelocidad = (int) (x * sensibilidadSensor);
             this.yVelocidad = (int) (y * sensibilidadSensor);
         }
@@ -108,7 +105,9 @@ public class SpriteNave extends Sprite implements SensorEventListener {
 
     }
 
-    public int velocidadX() {
-        return xVelocidad;
+
+    @Override
+    public boolean colisionaCon(float x2, float y2) {
+        return x2 > x && x2 < x + ancho && y2 > y && y2 < y + alto;
     }
 }
