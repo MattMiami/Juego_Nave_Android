@@ -21,7 +21,7 @@ public class Meteoritos extends Sprite{
         this.y = (int) (Math.random()*gameView.getHeight());
 
         //Damos velocidades aleatorias a cada objeto meteorito
-        this.xVelocidad = rnd.nextInt(5)+ 4;
+        this.xVelocidad = (int) (rnd.nextInt(6)+1.5);
         this.yVelocidad = rnd.nextInt(10) - 5;
         this.vivo = vivo;
     }

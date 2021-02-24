@@ -264,6 +264,14 @@ public class GameView extends SurfaceView {
         listaMeteoritos.add(crearMeteorito(R.drawable.meteorito3, true));
         listaMeteoritos.add(crearMeteorito(R.drawable.meteorito4, true));
         listaMeteoritos.add(crearMeteorito(R.drawable.meteorito5, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito2, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito3, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito4, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito5, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito2, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito3, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito4, true));
+        listaMeteoritos.add(crearMeteorito(R.drawable.meteorito5, true));
     }
 
     //Para crear un meteorito
@@ -287,7 +295,7 @@ public class GameView extends SurfaceView {
                         sonidos.play(sonidoExplosion,1,1,0,0,1);
                         //Puntuación, si la puntuacion es igual a 900 ganamos el juego
                         puntos += 100;
-                        if (puntos == 900){
+                        if (puntos == 1200){
                             winGame(true);
                             puntos = 0;
                             mediaPlayer.stop();
